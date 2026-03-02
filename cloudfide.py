@@ -5,6 +5,11 @@ def add_virtual_column(df: pd.DataFrame, role: str, new_column: str) -> pd.DataF
     # "Column labels must consist only of letters and underscores (_)"
     if not new_column or not all(c.isalpha() or c == '_' for c in new_column):
         return pd.DataFrame()
+
+    # Validating all existing df columns
+    for col in df.columns:
+        if not col or not all(c.isalpha() or c == '_' for c in str(col)):
+            return pd.DataFrame()
     
     # Parse expression (role) - so must be column [spaces] op [spaces] column, where op is +, -, or *
     role = role.strip()
